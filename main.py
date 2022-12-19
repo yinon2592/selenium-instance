@@ -39,7 +39,7 @@ def main():
             print(f"{packet_name:<45}{'starts download at':<30}{strftime('%H:%M:%S %t %d.%m.%Y', localtime())}")
             Thread(target=download_url, args=(get_jfrog_some_file_url(driver, packet_name),)).start()
     except Exception as e:
-        print("Error occured :")
+        print("Error Occurred :")
         print(e)
     finally:
         driver.quit()
