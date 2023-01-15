@@ -2,15 +2,19 @@ from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.options import Options
 from selenium.webdriver.chrome.service import Service
+from selenium.webdriver.support.wait import WebDriverWait
+from selenium.webdriver.support import expected_conditions as EC
 import requests
 
 def setup():
     options = Options()
     options.add_argument("start-maximized")
+    # options.add_argument("--headless")
+    # options.add_experimental_option('excludeSwitches', ['enable-logging'])
     # if no chrome driver is installed use this (slower performence) :
     # driver = webdriver.Chrome(service=Service(ChromeDriverManager().install()), options=options)
     chromedriver_path = r"<path to compitable chrome driver>"
-    driver = webdriver.Chrome(service=Service(chromedriver_path), options=options)
+    driver = webdriver.Chrome(service=Service(executable_path=chromedriver_path), options=options)
     driver.implicitly_wait(15) # wait for element till 15 sec
     some_path = r"<some_path>"
     driver.get(some_path)
@@ -38,4 +42,6 @@ def download_url(t_element_url):
     with open(file_name, 'wb') as f:
         f.write(r.content)
 
+last_link_text = WebDriverWait(driver, 30).until(EC.visibility_of_all_elements_located((By.TAG_NAME, "a")))[-1].text
+WebDriverWait(driver, 30).until(EC.element_to_be_clickable((By.LINK_TEXT, last_link_text))).click()
 
