@@ -30,7 +30,7 @@ def main():
                 print(f"{element_file_name:<45}{'starts download at':<30}{strftime('%H:%M:%S %t %d.%m.%Y', localtime())}")
                 Thread(target=download_url, args=(element_url,)).start()
             if(element_file_name == "00000"):
-                json_page = requests.get(element_url).json()
+                json_page = requests.get(element_url).json() # download url content to memory and treat as json file (dict)
                 for packet_num in jfrog_packets_to_download_nums :
                     jfrog_simics_packets_to_download_names.append(get_file_name_from_json_page(json_page, packet_num))
         jfrog_url = r"0000000"
